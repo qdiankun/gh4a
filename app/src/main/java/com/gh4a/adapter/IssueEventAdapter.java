@@ -94,11 +94,6 @@ public class IssueEventAdapter extends CommentAdapterBase<IssueEventHolder> {
     }
 
     @Override
-    protected long getId(IssueEventHolder item) {
-        return item.comment != null ? item.comment.getId() : item.event.getId();
-    }
-
-    @Override
     protected User getUser(IssueEventHolder item) {
         return item.getUser();
     }
@@ -212,7 +207,7 @@ public class IssueEventAdapter extends CommentAdapterBase<IssueEventHolder> {
     }
 
     @Override
-    public List<Reaction> loadReactionDetailsInBackground(Object item) throws IOException {
+    public List<Reaction> loadReactionDetailsInBackground(ReactionBar.Item item) throws IOException {
         ViewHolder<IssueEventHolder> holder = (ViewHolder) item;
         IssueService service = (IssueService)
                 Gh4Application.get().getService(Gh4Application.ISSUE_SERVICE);
@@ -221,7 +216,7 @@ public class IssueEventAdapter extends CommentAdapterBase<IssueEventHolder> {
     }
 
     @Override
-    public Reaction addReactionInBackground(Object item, String content) throws IOException {
+    public Reaction addReactionInBackground(ReactionBar.Item item, String content) throws IOException {
         ViewHolder<IssueEventHolder> holder = (ViewHolder) item;
         IssueService service = (IssueService)
                 Gh4Application.get().getService(Gh4Application.ISSUE_SERVICE);
