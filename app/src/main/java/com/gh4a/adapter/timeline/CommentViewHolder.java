@@ -81,7 +81,9 @@ class CommentViewHolder
         ivGravatar.setTag(user);
 
         tvTimestamp.setText(StringUtils.formatRelativeTime(mContext, createdAt, true));
-        if (createdAt.equals(updatedAt)) {
+        if (createdAt.equals(updatedAt) || item.getCommitComment() != null) {
+            // Edit timestamp looks to be incorrect for commit comments. They all appear to be
+            // modified.
             tvEditTimestamp.setVisibility(View.GONE);
         } else {
             tvEditTimestamp.setText(StringUtils.formatRelativeTime(mContext, updatedAt, true));
