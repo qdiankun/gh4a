@@ -24,6 +24,7 @@ import com.gh4a.utils.IntentUtils;
 
 import org.eclipse.egit.github.core.Comment;
 import org.eclipse.egit.github.core.CommitComment;
+import org.eclipse.egit.github.core.Reaction;
 import org.eclipse.egit.github.core.RepositoryId;
 import org.eclipse.egit.github.core.Review;
 import org.eclipse.egit.github.core.service.IssueService;
@@ -169,6 +170,16 @@ public class ReviewFragment extends ListDataBaseFragment<TimelineItem>
 
     @Override
     public String getShareSubject(Comment comment) {
+        return null;
+    }
+
+    @Override
+    public List<Reaction> loadReactionDetailsInBackground(Comment comment) throws IOException {
+        return null;
+    }
+
+    @Override
+    public Reaction addReactionInBackground(Comment comment, String content) throws IOException {
         return null;
     }
 
