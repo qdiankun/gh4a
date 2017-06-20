@@ -2,6 +2,7 @@ package com.gh4a.loader;
 
 import android.content.Context;
 
+import com.gh4a.DefaultClient;
 import com.gh4a.Gh4Application;
 
 import org.eclipse.egit.github.core.CommitComment;
@@ -33,8 +34,13 @@ public class ReviewTimelineLoader extends BaseLoader<List<TimelineItem>> {
 
     @Override
     protected List<TimelineItem> doLoadInBackground() throws Exception {
-        PullRequestService pullRequestService = (PullRequestService)
-                Gh4Application.get().getService(Gh4Application.PULL_SERVICE);
+        // FIXME: There's a bug on Github server side where HTTP error 500 is returned
+        //        when requesting review comments with reactions. Work around it by not
+        //        requesting reactions in that case for now.
+        DefaultClient client = new DefaultClient("application/vnd.github.v3.full+json");
+        client.setOAuth2Token(Gh4Application.get().getAuthToken());
+
+        PullRequestService pullRequestService = new PullRequestService(client);
         RepositoryId repoId = new RepositoryId(mRepoOwner, mRepoName);
 
         Review review = pullRequestService.getReview(repoId, mPullRequestNumber, mReviewId);
