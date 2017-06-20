@@ -47,16 +47,19 @@ public class PullRequestCommentListLoader extends IssueCommentListLoader {
             reviewsById.put(review.getId(), timelineReview);
             reviews.add(timelineReview);
 
-            if (Review.STATE_PENDING.equals(review.getState())) {
-                // For reviews with pending state we have to manually load the comments
-                List<CommitComment> pendingComments =
-                        pullRequestService.getReviewComments(repoId, mIssueNumber, review.getId());
-
-                for (CommitComment pendingComment : pendingComments) {
-                    CommitFile commitFile = filesByName.get(pendingComment.getPath());
-                    timelineReview.addComment(pendingComment, commitFile, true);
-                }
-            }
+            // FIXME: There's a bug on Github server side where HTTP error 500 is returned
+            //        when requesting review comments with reactions. Work around it by not
+            //        requesting comments for pending reviews for now.
+//            if (Review.STATE_PENDING.equals(review.getState())) {
+//                // For reviews with pending state we have to manually load the comments
+//                List<CommitComment> pendingComments =
+//                        pullRequestService.getReviewComments(repoId, mIssueNumber, review.getId());
+//
+//                for (CommitComment pendingComment : pendingComments) {
+//                    CommitFile commitFile = filesByName.get(pendingComment.getPath());
+//                    timelineReview.addComment(pendingComment, commitFile, true);
+//                }
+//            }
         }
 
         List<CommitComment> commitComments = pullRequestService.getComments(repoId, mIssueNumber);
