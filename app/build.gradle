@@ -3,17 +3,19 @@ def isPlaystore = taskRequests.contains("Playstore") || taskRequests.contains("p
 
 buildscript {
     repositories {
-        maven { url 'https://maven.fabric.io/public' }
+//        maven { url 'https://maven.fabric.io/public' }
+        jcenter()
     }
 
     dependencies {
-        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'com.android.tools.build:gradle:2.2.3'
     }
 }
 
 repositories {
-    mavenCentral()
-    maven { url 'https://maven.fabric.io/public' }
+    jcenter()
+//    mavenCentral()
+//    maven { url 'https://maven.fabric.io/public' }
     maven { url "https://jitpack.io" }
 }
 
@@ -28,7 +30,7 @@ android {
         playStore
     }
     compileSdkVersion 24
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '25.0.3'
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 23
@@ -82,9 +84,9 @@ dependencies {
     compile('com.vdurmont:emoji-java:3.2.0') {
         exclude group: 'org.json', module : 'json'
     }
-    playstoreCompile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
-        transitive = true;
-    }
+//    playstoreCompile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
+//        transitive = true;
+//    }
 }
 
 def Properties props = new Properties()
